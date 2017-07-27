@@ -7,44 +7,62 @@
       $sceDelegateProvider.resourceUrlWhitelist(urlWhitelist);
   }]);
 
-// Add Browzine Links
-  app.controller('prmBriefResultAfterController', function($scope, $http) { 
+// Add Article In Context & Browzine Links
+  app.controller('prmSearchResultAvailabilityLineAfterController', function($scope, $http) { 
     var vm = this;
-    if (vm.parentCtrl.item.pnx.addata.doi)  {
-          vm.doi = vm.parentCtrl.item.pnx.addata.doi[0] || '';
-          var url = "https://yourserver.edu/primo/browzine/browzineArticleInContext?DOI=" + vm.doi;
-          $http.jsonp(url, {jsonpCallbackParam: 'callback'}).then(function(response) {
-          $scope.article = response.data;
-          }, function(error){
-                 console.log(error); //
+		if (vm.parentCtrl.result.pnx.addata.doi && vm.parentCtrl.result.pnx.display.type[0] == 'article')	{
+        	vm.doi = vm.parentCtrl.result.pnx.addata.doi[0] || '';
+        	var articleURL = "https://yourserver.edu/primo/browzine/browzineArticleInContext?DOI=" + vm.doi;
+        	$http.jsonp(articleURL, {jsonpCallbackParam: 'callback'}).then(function(response) {
+        	  $scope.article = response.data;
+        	}, function(error){
+            console.log(error);
             });
-      }
+    	}
+      if (vm.parentCtrl.result.pnx.addata.issn && vm.parentCtrl.result.pnx.display.type[0] == 'journal')	{	
+        	vm.issn = vm.parentCtrl.result.pnx.addata.issn[0].replace("-", "") || '';
+        	var journalURL = "https://yourserver.edu/primo/browzine/browzineJournals?ISSN=" + vm.issn;
+        	$http.jsonp(journalURL, {jsonpCallbackParam: 'callback'}).then(function(response) {
+        		$scope.journal = response.data;
+        	}, function(error){
+            console.log(error);
+            });
+        }
 
+	}); 
 
-      //TO DO: add control so both links don't show up for a single record...
+  app.component('prmSearchResultAvailabilityLineAfter', { 
+		bindings: { parentCtrl: '<' }, 
+		controller: 'prmSearchResultAvailabilityLineAfterController',
+		template: `
+					<div ng-if="article.data.browzineWebLink"><a href="{{ article.data.browzineWebLink }}" target="_blank"> See article in Table of Contents!</a></div>
+					<div ng-if="journal.data[0].browzineWebLink"><a href="{{ journal.data[0].browzineWebLink }}" target="_blank"> Browse this journal in Browzine!</a></div>	
+ 				 ` 
+	});
 
-
-    if (vm.parentCtrl.item.pnx.addata.issn) { 
+// Add Journal Cover Images from Browzine
+  app.controller('prmSearchResultThumbnailContainerAfterController', function($scope, $http) {
+    var vm = this;
+    var newThumbnail = '';
+    if (vm.parentCtrl.item.pnx.addata.issn) {
       vm.issn = vm.parentCtrl.item.pnx.addata.issn[0].replace("-", "") || '';
-      var url2 = "https://yourserver.edu/primo/browzine/browzineJournals?ISSN=" + vm.issn;
-      $http.jsonp(url2, {jsonpCallbackParam: 'callback'}).then(function(response) {
-        $scope.journal = response.data;
-        console.log(response.data);
+      var journalURL = "https://yourserver.edu/primo/browzine/browzineJournals?ISSN=" + vm.issn;
+      $http.jsonp(journalURL, {jsonpCallbackParam: 'callback'}).then(function(response) {
+        newThumbnail = response.data.data["0"].coverImageUrl;
         }, function(error){
-              console.log(error); //
-        });
-    }
+          console.log(error); //
+          });
+      }
+      vm.$doCheck = function(changes) {
+        if (vm.parentCtrl.selectedThumbnailLink) {
+          if (newThumbnail != '' && (vm.parentCtrl.selectedThumbnailLink.linkURL.indexOf("icon_journal.png") != -1 || vm.parentCtrl.selectedThumbnailLink.linkURL.indexOf("img/icon_article.png") != -1) ) {
+            vm.parentCtrl.selectedThumbnailLink.linkURL = newThumbnail;	
+		      }
+        }
+      };
+  });
 
-  }); 
-
-  app.component('prmBriefResultAfter', { 
-    bindings: { parentCtrl: '<' }, 
-    controller: 'prmBriefResultAfterController',
-    template: `
-          
-          <div ng-if="article.data.browzineWebLink"><blockquote><a href="{{ article.data.browzineWebLink }}" target="_blank">See in Table of Contents!</a> ({{$ctrl.doi}}) </blockquote></div>
-          <div ng-if="journal.data[0].browzineWebLink"><blockquote><a href="{{ journal.data[0].browzineWebLink }}" target="_blank">Browse this journal in Browzine!</a> ({{$ctrl.issn}}) </blockquote></div>
-            
-          
-          ` 
-  }); 
+  app.component('prmSearchResultThumbnailContainerAfter', {
+    bindings: { parentCtrl: '<' },
+    controller: 'prmSearchResultThumbnailContainerAfterController',
+  });

@@ -13,19 +13,33 @@ exports.ArticleLookup = function (event, context, callback) {
     var stoID = process.env['stoID'];
     var options = {
         host :  'api.thirdiron.com',
-        path : '/public/v1/libraries/' + stoID + '/articles/doi/' + DOI + "?access_token=" + stoKey,
+        port : 443,
+        path : '/public/v1/libraries/' + stoID + '/articles/doi/' + DOI + '?access_token=' + stoKey,
         method : 'GET'
     };
  
-    //make the https get call to Browzine and pass the callback data to Primo
+    // make the https get call to Browzine and pass the callback data to Primo
     var getReq = https.request(options, function(res) {
-        res.on('data', function(data) {
-            callback(null,  
-            cb + '(' + data + ')'
-            );
+    
+        var data = '';
+        res.on('data', function(chunk) {
+            data += chunk.toString();
+        });
+        
+        res.on('end', function(){
+            if (res.statusCode == 200) {
+                callback(null,  
+                 cb + '(' + data + ')'
+                );
+            } else {
+               // Browzine's API returns a 404 if data isn't found, so send an empty response if call is unsuccessful
+               callback(null,
+                cb + '({"data":[]})'
+               ); 
+            }
         });
     });
- 
+    
     //end the request
     getReq.end();
     getReq.on('error', function(err){
