@@ -1,0 +1,11 @@
+/* Browzine styles */
+.browzine-icon  {
+  margin-right:2px;
+}
+
+.browzine-external-link {
+  width:15px;
+  height:15px;
+  min-width:15px;
+  min-height:15px;
+}
