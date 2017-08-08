@@ -35,9 +35,9 @@
     bindings: { parentCtrl: '<' }, 
     controller: 'prmSearchResultAvailabilityLineAfterController',
     template: `
-          <div ng-if="article.data.browzineWebLink"><a href="{{ article.data.browzineWebLink }}" target="_blank"> See article in Table of Contents!</a></div>
-          <div ng-if="journal.data[0].browzineWebLink"><a href="{{ journal.data[0].browzineWebLink }}" target="_blank"> Browse this journal in Browzine!</a></div>  
-          ` 
+      <div ng-if="article.data.browzineWebLink"><a href="{{ article.data.browzineWebLink }}" target="_blank" title="Via Browzine"><img src="custom/01BRC_SOC/img/browzine.png" class="browzine-icon"> View Issue Contents <md-icon md-svg-icon="primo-ui:open-in-new" aria-label="icon-open-in-new" role="img" class="browzine-external-link"><svg id="open-in-new_cache29" width="100%" height="100%" viewBox="0 0 24 24" y="504" xmlns="http://www.w3.org/2000/svg" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"></svg></md-icon></a></div>
+      <div ng-if="journal.data[0].browzineWebLink"><a href="{{ journal.data[0].browzineWebLink }}" target="_blank" title="Via Browzine"><img src="custom/01BRC_SOC/img/browzine.png" class="browzine-icon"> View Journal Contents <md-icon md-svg-icon="primo-ui:open-in-new" aria-label="icon-open-in-new" role="img" class="browzine-external-link"><svg id="open-in-new_cache29" width="100%" height="100%" viewBox="0 0 24 24" y="504" xmlns="http://www.w3.org/2000/svg" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"></svg></md-icon></a></div>
+       ` 
   });
 
 // Add Journal Cover Images from Browzine
