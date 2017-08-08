@@ -8,6 +8,7 @@ This project uses Node.js on a non-Primo server to query Browzine's APIs and ret
 To implement:
 
 1. Set up the Node.js scripts on a local server.  Browzine can provide some assistance with this step.  I tested using Amazon's Lambda service and an API gateway.  For production, St. Olaf is using a local server and ColdFusion component.  I've included that code if you happen to be a CF shop.
+   1. stoKey and stoID refer to your Browzine API key and customer number.  They should be updated to reflect your institution's keys.  Contact [Browzine](http://support.thirdiron.com/knowledgebase/articles/1127656-browzine-api-functionality) to obtain credentials.
 1. Add the browzine.js code to the custom.js file in your [Customization Package](https://knowledge.exlibrisgroup.com/Primo/Product_Documentation/New_Primo_User_Interface/New_UI_Customization_-_Best_Practices#Using_the_UI_Customization_Package_Manager).  You will need to update the "nodeserver" constant with the URI for the server running the Node scripts.
 1. Add the browzine.css lines to custom1.css file in your [Customization Package](https://knowledge.exlibrisgroup.com/Primo/Product_Documentation/New_Primo_User_Interface/New_UI_Customization_-_Best_Practices#Using_the_UI_Customization_Package_Manager).
 1. Deploy the Customization Package on your Primo server.
