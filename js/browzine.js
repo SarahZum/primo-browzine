@@ -7,7 +7,7 @@
       $sceDelegateProvider.resourceUrlWhitelist(urlWhitelist);
   }]);
 
-// Add Article In Context & Browzine Links
+// Add Article In Context & BrowZine Links
   app.controller('prmSearchResultAvailabilityLineAfterController', function($scope, $http, nodeserver) { 
     var vm = this;
     if (vm.parentCtrl.result.pnx.addata.doi && vm.parentCtrl.result.pnx.display.type[0] == 'article')  {
@@ -31,16 +31,21 @@
 
   }); 
 
+// Below is where you can customize the wording that is displayed (as well as the hover over text) for the BrowZine links.
+// St Olaf has chosen "View Journal Contents" for the "Journal Availability Link" but other great options include things such as "View Journal" or "View this Journal"
+// St Olaf is using "View Issue Contents" for the "Article in Context" link but another great option is "View Complete Issue" or "View Article in Context".
+// St Olaf also has added a hover over link that says "Via BrowZine" to emphasize the interaction being used.
+
   app.component('prmSearchResultAvailabilityLineAfter', { 
     bindings: { parentCtrl: '<' }, 
     controller: 'prmSearchResultAvailabilityLineAfterController',
     template: `
-      <div ng-if="article.data.browzineWebLink"><a href="{{ article.data.browzineWebLink }}" target="_blank" title="Via Browzine"><img src="custom/01BRC_SOC/img/browzine.png" class="browzine-icon"> View Issue Contents <md-icon md-svg-icon="primo-ui:open-in-new" aria-label="icon-open-in-new" role="img" class="browzine-external-link"><svg id="open-in-new_cache29" width="100%" height="100%" viewBox="0 0 24 24" y="504" xmlns="http://www.w3.org/2000/svg" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"></svg></md-icon></a></div>
-      <div ng-if="journal.data[0].browzineWebLink"><a href="{{ journal.data[0].browzineWebLink }}" target="_blank" title="Via Browzine"><img src="custom/01BRC_SOC/img/browzine.png" class="browzine-icon"> View Journal Contents <md-icon md-svg-icon="primo-ui:open-in-new" aria-label="icon-open-in-new" role="img" class="browzine-external-link"><svg id="open-in-new_cache29" width="100%" height="100%" viewBox="0 0 24 24" y="504" xmlns="http://www.w3.org/2000/svg" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"></svg></md-icon></a></div>
+      <div ng-if="article.data.browzineWebLink"><a href="{{ article.data.browzineWebLink }}" target="_blank" title="Via BrowZine"><img src="custom/01BRC_SOC/img/browzine.png" class="browzine-icon"> View Issue Contents <md-icon md-svg-icon="primo-ui:open-in-new" aria-label="icon-open-in-new" role="img" class="browzine-external-link"><svg id="open-in-new_cache29" width="100%" height="100%" viewBox="0 0 24 24" y="504" xmlns="http://www.w3.org/2000/svg" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"></svg></md-icon></a></div>
+      <div ng-if="journal.data[0].browzineWebLink"><a href="{{ journal.data[0].browzineWebLink }}" target="_blank" title="Via BrowZine"><img src="custom/01BRC_SOC/img/browzine.png" class="browzine-icon"> View Journal Contents <md-icon md-svg-icon="primo-ui:open-in-new" aria-label="icon-open-in-new" role="img" class="browzine-external-link"><svg id="open-in-new_cache29" width="100%" height="100%" viewBox="0 0 24 24" y="504" xmlns="http://www.w3.org/2000/svg" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"></svg></md-icon></a></div>
        ` 
   });
 
-// Add Journal Cover Images from Browzine
+// Add Journal Cover Images from BrowZine
   app.controller('prmSearchResultThumbnailContainerAfterController', function($scope, $http, nodeserver) {
     var vm = this;
     var newThumbnail = '';
