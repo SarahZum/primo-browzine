@@ -1,6 +1,8 @@
 # primo-browzine
 Integrate Browzine's Article DOI Lookup and Journal Availability endpoints into Primo interface.  The integrations described here are live on the [St. Olaf](https://stolaf-primo.hosted.exlibrisgroup.com/primo-explore/search?vid=01BRC_SOC&sortby=rank) and [Carleton](https://carleton-primo.hosted.exlibrisgroup.com/primo-explore/search?vid=01BRC_CCO&sortby=rank) Primo sites.
 
+![Article in Context links in Primo results](browzine_example.png?raw=true "Article in Context links in Primo results")
+
 Requirements:  
 * Browzine subscription and API Key + Customer Number.
 * Access to Customization Manager files for the new Primo UI.
