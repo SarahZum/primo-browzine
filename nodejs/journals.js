@@ -8,13 +8,13 @@ exports.JournalLookup = function (event, context, callback) {
     var cb = (query.callback === undefined ? '' : query.callback);
     
     // API key from Browzine
-    var stoKey = process.env['stoKey'];
+    var browzineAPIKey = process.env['browzineAPIKey'];
     // Customer ID from Browzine
-    var stoID = process.env['stoID'];
+    var browzineLibraryID = process.env['browzineLibraryID'];
     var options = {
         host :  'api.thirdiron.com',
         port : 443,
-        path : '/public/v1/libraries/' + stoID + '/search?issns=' + ISSN + '&access_token=' + stoKey,
+        path : '/public/v1/libraries/' + browzineLibraryID + '/search?issns=' + ISSN + '&access_token=' + browzineAPIKey,
         method : 'GET'
     };
     
