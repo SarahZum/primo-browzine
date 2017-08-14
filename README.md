@@ -1,5 +1,5 @@
 # primo-browzine
-Integrate Browzine's Article DOI Lookup and Journal Availability endpoints into Primo interface.  The integrations described here are live on the [St. Olaf](https://stolaf-primo.hosted.exlibrisgroup.com/primo-explore/search?vid=01BRC_SOC&sortby=rank) and [Carleton](https://carleton-primo.hosted.exlibrisgroup.com/primo-explore/search?vid=01BRC_CCO&sortby=rank) Primo sites.
+Integrate Browzine's Article DOI Lookup and Journal Availability endpoints into Primo interface.  The integrations described here are live on the [St. Olaf](https://stolaf-primo.hosted.exlibrisgroup.com/primo-explore/search?vid=01BRC_SOC&sortby=rank) and [Carleton](https://carleton-primo.hosted.exlibrisgroup.com/primo-explore/search?vid=01BRC_CCO&sortby=rank) Primo sites.  For a detailed description of all the interactions this API can provide and implementation suggestions, please visit the [BrowZine Technical Documentation Site](https://thirdiron.atlassian.net/wiki/spaces/BrowZineAPIDocs/overview) and take a look at the Detailed Interaction Overview in the Primo Interation section. [(direct link)](https://thirdiron.atlassian.net/wiki/spaces/BrowZineAPIDocs/pages/79200260/Ex+Libris+Primo+Integration)
 
 ![Article in Context links in Primo results](browzine_example.png?raw=true "Article in Context links in Primo results")
 
