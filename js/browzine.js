@@ -1,6 +1,6 @@
 // Define Angular module and whitelist URL of server with Node.js script
   var app = angular.module('viewCustom', ['angularLoad'])
-    .constant('nodeserver', "https://yourserver.edu")
+    .constant('nodeserver', "https://apiconnector.thirdiron.com/v1/libraries/your_browzine_library_id")
     .config(['$sceDelegateProvider', 'nodeserver', ($sceDelegateProvider, nodeserver) => {
       let urlWhitelist = $sceDelegateProvider.resourceUrlWhitelist();
       urlWhitelist.push(`${nodeserver}**`);
@@ -12,7 +12,7 @@
     var vm = this;
     if (vm.parentCtrl.result.pnx.addata.doi && vm.parentCtrl.result.pnx.display.type[0] == 'article')  {
           vm.doi = vm.parentCtrl.result.pnx.addata.doi[0] || '';
-          var articleURL = nodeserver + "/primo/browzine/articles?DOI=" + vm.doi;
+          var articleURL = nodeserver + "/articles?DOI=" + vm.doi;
           $http.jsonp(articleURL, {jsonpCallbackParam: 'callback'}).then(function(response) {
             $scope.article = response.data;
           }, function(error){
@@ -21,7 +21,7 @@
       }
       if (vm.parentCtrl.result.pnx.addata.issn && vm.parentCtrl.result.pnx.display.type[0] == 'journal')  {
           vm.issn = vm.parentCtrl.result.pnx.addata.issn[0].replace("-", "") || '';
-          var journalURL = nodeserver + "/primo/browzine/journals?ISSN=" + vm.issn;
+          var journalURL = nodeserver + "/journals?ISSN=" + vm.issn;
           $http.jsonp(journalURL, {jsonpCallbackParam: 'callback'}).then(function(response) {
             $scope.journal = response.data;
           }, function(error){
@@ -51,7 +51,7 @@
     var newThumbnail = '';
     if (vm.parentCtrl.item.pnx.addata.issn) {
       vm.issn = vm.parentCtrl.item.pnx.addata.issn[0].replace("-", "") || '';
-      var journalURL = nodeserver + "/primo/browzine/journals?ISSN=" + vm.issn;
+      var journalURL = nodeserver + "/journals?ISSN=" + vm.issn;
       $http.jsonp(journalURL, {jsonpCallbackParam: 'callback'}).then(function(response) {
         newThumbnail = response.data.data["0"].coverImageUrl;
         }, function(error){
