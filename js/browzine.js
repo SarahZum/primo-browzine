@@ -8,27 +8,30 @@ var app = angular.module('viewCustom', ['angularLoad'])
 }]);
 
 // Add Article In Context & BrowZine Links
-app.controller('prmSearchResultAvailabilityLineAfterController', function ($scope, $http, nodeserver) {
-  var vm = this;
-  if (vm.parentCtrl.result.pnx.addata.doi && vm.parentCtrl.result.pnx.display.type[0] == 'article') {
-    vm.doi = vm.parentCtrl.result.pnx.addata.doi[0] || '';
-    var articleURL = nodeserver + "/primo/browzine/articles?DOI=" + vm.doi;
-    $http.jsonp(articleURL, { jsonpCallbackParam: 'callback' }).then(function (response) {
-      $scope.article = response.data;
-    }, function (error) {
-      console.log(error);
-    });
-  }
-  if (vm.parentCtrl.result.pnx.addata.issn && vm.parentCtrl.result.pnx.display.type[0] == 'journal') {
-    vm.issn = vm.parentCtrl.result.pnx.addata.issn[0].replace("-", "") || '';
-    var journalURL = nodeserver + "/primo/browzine/journals?ISSN=" + vm.issn;
-    $http.jsonp(journalURL, { jsonpCallbackParam: 'callback' }).then(function (response) {
-      $scope.journal = response.data;
-    }, function (error) {
-      console.log(error);
-    });
-  }
-});
+  app.controller('prmSearchResultAvailabilityLineAfterController', function($scope, $http, nodeserver) {
+    var vm = this;
+    $scope.book_icon = "https://s3.amazonaws.com/thirdiron-assets/images/integrations/browzine_open_book_icon.png";
+    if (vm.parentCtrl.result.pnx.addata.doi && vm.parentCtrl.result.pnx.display.type[0] == 'article')  {
+          vm.doi = vm.parentCtrl.result.pnx.addata.doi[0] || '';
+          var articleURL = nodeserver + "/primo/browzine/articles?DOI=" + vm.doi;
+          $http.jsonp(articleURL, {jsonpCallbackParam: 'callback'}).then(function(response) {
+            $scope.article = response.data;
+          }, function(error){
+            console.log(error);
+            });
+      }
+      if (vm.parentCtrl.result.pnx.addata.issn && vm.parentCtrl.result.pnx.display.type[0] == 'journal')  {
+          vm.issn = vm.parentCtrl.result.pnx.addata.issn[0].replace("-", "") || '';
+          var journalURL = nodeserver + "/primo/browzine/journals?ISSN=" + vm.issn;
+          $http.jsonp(journalURL, {jsonpCallbackParam: 'callback'}).then(function(response) {
+            $scope.journal = response.data;
+          }, function(error){
+            console.log(error);
+            });
+        }
+
+  });
+
 
 // Below is where you can customize the wording that is displayed (as well as the hover over text) for the BrowZine links.
 // St Olaf has chosen "View Journal Contents" for the "Journal Availability Link" but other great options include things such as "View Journal" or "View this Journal"
