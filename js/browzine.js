@@ -52,14 +52,16 @@ app.controller('prmSearchResultThumbnailContainerAfterController', function ($sc
     vm.issn = vm.parentCtrl.item.pnx.addata.issn[0].replace("-", "") || '';
     var journalURL = nodeserver + "/primo/browzine/journals?ISSN=" + vm.issn;
     $http.jsonp(journalURL, { jsonpCallbackParam: 'callback' }).then(function (response) {
-      newThumbnail = response.data.data["0"].coverImageUrl;
+      if (response.data.data["0"] && response.data.data["0"].browzineEnabled)  {
+        newThumbnail = response.data.data["0"].coverImageUrl;
+      }
     }, function (error) {
       console.log(error); //
     });
   }
   vm.$doCheck = function (changes) {
     if (vm.parentCtrl.selectedThumbnailLink) {
-      if (newThumbnail != '' && (vm.parentCtrl.selectedThumbnailLink.linkURL.indexOf("icon_journal.png") != -1 || vm.parentCtrl.selectedThumbnailLink.linkURL.indexOf("img/icon_article.png") != -1)) {
+      if (newThumbnail != '') {
         vm.parentCtrl.selectedThumbnailLink.linkURL = newThumbnail;
       }
     }
