@@ -48,7 +48,8 @@ app.component('prmSearchResultAvailabilityLineAfter', {
 app.controller('prmSearchResultThumbnailContainerAfterController', function ($scope, $http, nodeserver) {
   var vm = this;
   var newThumbnail = '';
-  if (vm.parentCtrl.item.pnx.addata.issn) {
+  // checking for item property as this seems to impact virtual shelf browse (for reasons as yet unknown)
+  if (vm.parentCtrl.item && vm.parentCtrl.item.pnx.addata.issn) {
     vm.issn = vm.parentCtrl.item.pnx.addata.issn[0].replace("-", "") || '';
     var journalURL = nodeserver + "/primo/browzine/journals?ISSN=" + vm.issn;
     $http.jsonp(journalURL, { jsonpCallbackParam: 'callback' }).then(function (response) {
